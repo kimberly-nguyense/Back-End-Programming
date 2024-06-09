@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -34,13 +35,11 @@ public class Excursion {
     private Date last_update;
 
     @ManyToOne
+    @JoinColumn(name = "vacation_id")
     private Vacation vacation;
 
-    @ManyToMany
-    @JoinTable(name="cart_items",
-            joinColumns = @JoinColumn(name="cart_item_id"),
-            inverseJoinColumns = @JoinColumn(name="excursion_id"))
-    private Set<CartItem> cartitems;
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "excursions")
+    private Set<CartItem> cartitems = new HashSet<>();
 
     public Excursion(){}
 }

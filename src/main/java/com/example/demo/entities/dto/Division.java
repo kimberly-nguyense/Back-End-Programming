@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -26,18 +27,15 @@ public class Division {
     @Column(name="last_update")
     private Date last_update;
 
-    @ManyToOne (fetch = FetchType.LAZY) //load on demand
+    @ManyToOne(fetch = FetchType.LAZY) //load on demand
     @JoinColumn(name="country_id",nullable = false, insertable = false, updatable = false)
     private Country country;
 
-    @Column(name="id")
-    private Long country_ID;
+    @Column(name="country_id")
+    private Long country_id;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "division")
-    private Set<Customer> customers;
+    private Set<Customer> customers = new HashSet<>();
 
     public Division(){}
-    public void setCountry(Country country){
-        this.country = country;
-    }
 }

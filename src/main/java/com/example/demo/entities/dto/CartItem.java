@@ -4,10 +4,11 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="customer")
+@Table(name="cartItems")
 @Data
 public class CartItem {
     @Id
@@ -16,15 +17,16 @@ public class CartItem {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name="vacation_id")
     private Vacation vacation;
 
     @ManyToMany
     @JoinTable(name="excursions",
-            joinColumns = @JoinColumn(name="excursion_id"),
-            inverseJoinColumns = @JoinColumn(name="cart_item_id"))
-    private Set<Excursion> excursions;
+            joinColumns = @JoinColumn(name="cart_item_id"),
+            inverseJoinColumns = @JoinColumn(name="excursion_id"))
+    private Set<Excursion> excursions = new HashSet<>();
     @ManyToOne
-    @JoinColumn(name="vacation_id",nullable = false)
+    @JoinColumn(name="cart_id")
     private Cart cart;
 
     @Column(name="create_date")
