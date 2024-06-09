@@ -16,7 +16,6 @@ public class CartItem {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="vacation_id",nullable = false)
     private Vacation vacation;
 
     @ManyToMany
@@ -25,7 +24,7 @@ public class CartItem {
             inverseJoinColumns = @JoinColumn(name="cart_item_id"))
     private Set<Excursion> excursions;
     @ManyToOne
-    @JoinColumn(name="division_id",nullable = false)
+    @JoinColumn(name="vacation_id",nullable = false)
     private Cart cart;
 
     @Column(name="create_date")

@@ -34,7 +34,6 @@ public class Excursion {
     private Date last_update;
 
     @ManyToOne
-    @JoinColumn(name="vacation_id",nullable = false)
     private Vacation vacation;
 
     @ManyToMany

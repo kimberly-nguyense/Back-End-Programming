@@ -31,9 +31,8 @@ public class Cart {
     private Date last_update;
 
     @ManyToOne
-    @JoinColumn(name="customer_id",nullable = false)
     private Customer customer;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart_item_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
     private Set<CartItem> cartItem;
 
     public enum StatusType{

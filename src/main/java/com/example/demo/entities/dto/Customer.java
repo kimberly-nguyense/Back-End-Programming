@@ -36,10 +36,9 @@ public class Customer {
     private Date last_update;
 
     @ManyToOne
-    @JoinColumn(name="division_id",nullable = false)
     private Division division;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "division_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
     private Set<Cart> carts;
 
     public Customer(){}
