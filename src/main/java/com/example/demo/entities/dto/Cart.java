@@ -1,7 +1,8 @@
 package com.example.demo.entities.dto;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,7 +13,8 @@ import java.util.Set;
 
 @Entity
 @Table(name="carts")
-@Data
+@Getter
+@Setter
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +29,7 @@ public class Cart {
     private int party_size;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private StatusType status;
     @Column(name="create_date")
     @CreationTimestamp
@@ -39,7 +42,7 @@ public class Cart {
     @JoinColumn(name="customer_id")
     private Customer customer;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
-    private Set<CartItem> cartItems = new HashSet<>();
+    private Set<CartItem> cartItems;
 
     public enum StatusType{
         pending, ordered, canceled

@@ -32,7 +32,7 @@ public class Customer {
     @Column(name="phone",nullable = false)
     private String phone;
 
-    @Column(name="postal_code",nullable = false)
+    @Column(name="postal_code")
     private String postal_code;
 
     @Column(name="create_date")
@@ -43,11 +43,11 @@ public class Customer {
     private Date last_update;
 
     @ManyToOne
-    @JoinColumn(name = "division_id",nullable = false)
+    @JoinColumn(name = "division_id")
     private Division division;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
-    private Set<Cart> carts = new HashSet<>();
+    private Set<Cart> carts;
 
     public Customer(){}
     public void add(Cart cart){
