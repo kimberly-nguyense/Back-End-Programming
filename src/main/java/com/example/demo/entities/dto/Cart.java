@@ -2,6 +2,8 @@ package com.example.demo.entities.dto;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -24,21 +26,33 @@ public class Cart {
     @Column(name="party_size")
     private int party_size;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status")
     private StatusType status;
     @Column(name="create_date")
+    @CreationTimestamp
     private Date create_date;
     @Column(name="last_update")
+    @UpdateTimestamp
     private Date last_update;
 
     @ManyToOne
     @JoinColumn(name="customer_id")
     private Customer customer;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
-    private Set<CartItem> cartItem = new HashSet<>();
+    private Set<CartItem> cartItems = new HashSet<>();
 
     public enum StatusType{
         pending, ordered, canceled
     }
     public Cart(){}
+
+    public void add(CartItem item){
+        if (item != null){
+            if (cartItems == null){
+                cartItems = new HashSet<>();
+            }
+            cartItems.add(item);
+            item.setCart(this); //bi-directional
+        }
+    }
 }

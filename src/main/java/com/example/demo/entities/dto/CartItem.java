@@ -2,6 +2,8 @@ package com.example.demo.entities.dto;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -30,8 +32,10 @@ public class CartItem {
     private Cart cart;
 
     @Column(name="create_date")
+    @CreationTimestamp
     private Date create_date;
     @Column(name="last_update")
+    @UpdateTimestamp
     private Date last_update;
 
     public CartItem(){}

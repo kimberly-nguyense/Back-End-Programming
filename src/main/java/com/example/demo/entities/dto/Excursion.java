@@ -3,6 +3,8 @@ package com.example.demo.entities.dto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -29,9 +31,10 @@ public class Excursion {
     private String image_URL;
 
     @Column(name="create_date")
+    @CreationTimestamp
     private Date create_date;
-
     @Column(name="last_update")
+    @UpdateTimestamp
     private Date last_update;
 
     @ManyToOne
@@ -39,7 +42,7 @@ public class Excursion {
     private Vacation vacation;
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "excursions")
-    private Set<CartItem> cartitems = new HashSet<>();
+    private Set<CartItem> cartItems = new HashSet<>();
 
     public Excursion(){}
 }

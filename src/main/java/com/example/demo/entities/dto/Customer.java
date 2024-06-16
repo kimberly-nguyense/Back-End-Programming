@@ -3,6 +3,8 @@ package com.example.demo.entities.dto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -27,13 +29,17 @@ public class Customer {
     @Column(name="address")
     private String address;
 
+    @Column(name="phone")
+    private String phone;
+
     @Column(name="postal_code")
     private String postal_code;
 
     @Column(name="create_date")
+    @CreationTimestamp
     private Date create_date;
-
     @Column(name="last_update")
+    @UpdateTimestamp
     private Date last_update;
 
     @ManyToOne
@@ -44,4 +50,13 @@ public class Customer {
     private Set<Cart> carts = new HashSet<>();
 
     public Customer(){}
+    public void add(Cart cart){
+        if (cart != null){
+            if (carts == null){
+                carts = new HashSet<>();
+            }
+            carts.add(cart);
+            cart.setCustomer(this); //bi-directional
+        }
+    }
 }
