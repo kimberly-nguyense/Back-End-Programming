@@ -1,6 +1,5 @@
 package com.example.demo.services;
 
-import com.example.demo.dao.CartRepository;
 import com.example.demo.dao.CustomerRepository;
 import com.example.demo.entities.dto.Cart;
 import com.example.demo.entities.dto.CartItem;
@@ -32,7 +31,15 @@ public class CheckoutServiceImpl implements CheckoutService{
 
         Set<CartItem> cartItems = purchase.getCartItems();
 
-        cartItems.forEach(cartItem -> cartItem.setCart(cart));
+//        cartItems.forEach(cartItem -> {cartItem.setCart(cart)});
+        cartItems.forEach(item -> {
+            cart.add(item);
+            item.setCart(cart);
+            item.getExcursions().forEach(excursion -> {
+                excursion.setVacation(item.getVacation());
+                excursion.getCartitems().add(item);
+            });
+        });
 
         Customer customer = purchase.getCustomer();
         customer.add(cart);

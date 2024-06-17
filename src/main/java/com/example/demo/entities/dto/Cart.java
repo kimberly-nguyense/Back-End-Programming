@@ -42,7 +42,13 @@ public class Cart {
     @JoinColumn(name="customer_id")
     private Customer customer;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
-    private Set<CartItem> cartItems = new HashSet<>();
+    private Set<CartItem> cartItem = new HashSet<>();
+
+    public void add(CartItem item) {
+        if (item != null){
+            cartItem.add(item);
+        }
+    }
 
     public enum StatusType{
         pending, ordered, canceled

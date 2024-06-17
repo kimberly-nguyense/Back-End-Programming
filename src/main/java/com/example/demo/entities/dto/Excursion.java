@@ -41,8 +41,12 @@ public class Excursion {
     @JoinColumn(name = "vacation_id")
     private Vacation vacation;
 
-    @ManyToMany
-    private Set<CartItem> cartItems = new HashSet<>();
+    @ManyToMany(mappedBy = "excursions")
+//    @ManyToMany
+//    @JoinTable(name="“excursion_cartitem”",
+//        joinColumns = @JoinColumn(name="excursion_id"),
+//        inverseJoinColumns = @JoinColumn(name="cart_item_id"))
+    private Set<CartItem> cartitems = new HashSet<>();
 
     public Excursion(){}
 }
