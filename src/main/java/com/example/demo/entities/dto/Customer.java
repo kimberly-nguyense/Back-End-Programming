@@ -32,7 +32,7 @@ public class Customer {
     @Column(name="phone",nullable = false)
     private String phone;
 
-    @Column(name="postal_code")
+    @Column(name="postal_code",nullable = false)
     private String postal_code;
 
     @Column(name="create_date")
@@ -47,14 +47,21 @@ public class Customer {
     private Division division;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
-    private Set<Cart> carts;
+    private Set<Cart> carts = new HashSet<>();
+    public Customer() {
+    }
 
-    public Customer(){}
+    public Customer(String firstName, String lastName, String address, String phone, String postal_code, Division division) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phone = phone;
+        this.postal_code = postal_code;
+        this.division = division;
+    }
+
     public void add(Cart cart){
         if (cart != null){
-            if (carts == null){
-                carts = new HashSet<>();
-            }
             carts.add(cart);
             cart.setCustomer(this); //bi-directional
         }

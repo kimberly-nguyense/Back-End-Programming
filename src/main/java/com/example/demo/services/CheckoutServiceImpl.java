@@ -14,16 +14,17 @@ import java.util.UUID;
 @Service
 public class CheckoutServiceImpl implements CheckoutService{
     private CustomerRepository customerRepository;
-    private CartRepository cartRepository;
 
-    public CheckoutServiceImpl(CustomerRepository customerRepository, CartRepository cartRepository){
+    public CheckoutServiceImpl(CustomerRepository customerRepository){
         this.customerRepository = customerRepository;
-        this.cartRepository = cartRepository;
     }
 
     @Override
     @Transactional
     public PurchaseResponse placeOrder(Purchase purchase){
+        if (purchase.getCartItems().isEmpty()){
+            return new PurchaseResponse("Cart is empty!");
+        }
         Cart cart = purchase.getCart();
 
         String orderTrackingNumber = generateOrderTrackingNumber();
@@ -38,7 +39,6 @@ public class CheckoutServiceImpl implements CheckoutService{
         cart.setStatus(Cart.StatusType.ordered);
 
         customerRepository.save(customer);
-        cartRepository.save(cart);
 
         return new PurchaseResponse(orderTrackingNumber);
     }
